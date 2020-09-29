@@ -1,6 +1,5 @@
 require 'chunky_png'
 
-
 # Takes an array with values [r, g, b] and converts to hexidecimal
 def rgb2hex(rgb)
     hex = "#{rgb[0].to_s(16)}#{rgb[1].to_s(16)}#{rgb[2].to_s(16)}"
@@ -9,6 +8,7 @@ end
 
 # Test to see if rgb2hex works as expected
 # puts rgb2hex([245, 120, 65])
+# => "f57841"
 
 
 # Takes a hexidecimal value and converts it to rgb array [r, g, b]
@@ -26,9 +26,11 @@ end
 
 # Test to see if hex2rgb works as expected
 # p hex2rgb(rgb2hex([245, 120, 64]))
-
+# => [245, 120, 64]
 
 # https://blog.anidear.com/2011/11/convert-string-to-binary-in-ruby.html
+
+
 # Takes a string and turns it into a binary string 
 def str2bin(message)
     binary = message.unpack("B*")[0]
@@ -37,6 +39,7 @@ end
 
 # Test to see if str2bin works as expected
 # puts str2bin("Hello world") 
+# => "0100100001100101011011000110110001101111001000000111011101101111011100100110110001100100"
 
 # Takes a binary string and returns a string of ASCII characters
 def bin2str(binary)
@@ -45,11 +48,14 @@ def bin2str(binary)
 end
 
 # Test to see if bin2str works as expected
-# # puts bin2str(str2bin("Hello world"))
+# puts bin2str("0100100001100101011011000110110001101111001000000111011101101111011100100110110001100100")
+# => "Hello world"
 
 
 # https://stackoverflow.com/questions/3505475/check-if-an-integer-is-within-a-range/18599494 
-# if hex 
+
+
+
 def encode(hex, digit)
     hex = hex.delete_prefix("#")
     if (0..5) === hex[-1].to_i
@@ -62,7 +68,7 @@ end
 
 # Test to see if encode works as expected
 # puts encode("#f57841", 1)
-
+# => "f57842"
 
 def decode(hex) 
     hex = hex.delete_prefix("#")
@@ -73,31 +79,14 @@ def decode(hex)
     end
 end
 
-# # path = "ruby_icon.png"
-# # if File.extname(path) == ".png"
-# #     puts "Woohoo"
-# # end
+# Test to see if decode works as expected
+# puts decode("#f57841").class
+# => "1"
 
-# # def hide(message)
-# #     delimiter = '1111111111111110'
-#     puts "Enter image path"
-#     path = gets.chomp
-#     if File.extname(path) == ".png"
-#         img = ChunkyPNG::Image.from_blob(File.read(path))
-#         puts img.pixels.count
-#         # Writes an image to newfile.png.
-#         # File.open("hidden_#{path}", 'wb') { |io| image.write(io) }
-#         # binary_string = image.to_blob
 
-        
-#     else
-#         exit
-#     end
-# #     binary = str2bin(message) + delimiter
+# https://stackoverflow.com/a/11907718
 
-# # end
 
-# https://stackoverflow.com/a/11907718 
 # Populates and returns an array with the rgb values for each pixel
 def get_pixel_data(image)
     pixel_data = []
@@ -110,6 +99,14 @@ def get_pixel_data(image)
     return pixel_data
 end
 
+# Test to see if get_pixel_data works as expected
+# image = ChunkyPNG::Image.from_file('r_tiny.png')
+# p get_pixel_data(image)
+# => [[247, 247, 247], [247, 247, 247], [247, 247, 247], [247, 247, 247], 
+#       [247, 251, 251], [247, 253, 253], [247, 247, 247], ..., [243, 192, 193]]
+
+
+# Creates an image from an array of pixel data
 def create_image_with_pixel(pixels, image)
     new_img = ChunkyPNG::Image.new("#{image.dimension.width}".to_i,"#{image.dimension.height}".to_i, ChunkyPNG::Color::TRANSPARENT)
 
@@ -121,14 +118,14 @@ def create_image_with_pixel(pixels, image)
             pixel_index += 1 
         end
     end
-
     return new_img
 end
 
-
-# Test to see if get_pixel_data works as expected
+# Test to see if create_image_with_pixel works as expected
 # image = ChunkyPNG::Image.from_file('r_tiny.png')
-# p get_pixel_data(image)
+# new_img = create_image_with_pixel(get_pixel_data(image), image)
+# new_img.save("test.png")
+# => test.png created in current directory
 
 def hide(message)
     delimiter = '1111111111111110'
@@ -139,6 +136,9 @@ def hide(message)
     if File.extname(path) == ".png"
         img = ChunkyPNG::Image.from_file(path)
         old_data = get_pixel_data(img)
+
+        # part of test
+        p old_data[0..10]
 
         # all of our new pixel data
         new_data = []
@@ -159,10 +159,19 @@ def hide(message)
             end
         end
 
-        # p new_data[0][0]
+        # part of test
+        p new_data[0..10]
+
         new_img = create_image_with_pixel(new_data, img)
-        new_img.save("hd_#{path}")
+        new_img.save("test#{path}")
     end
 end
 
-hide("hi")
+# Test if hide is working as expected 
+hide("hello")
+# --uncomment line 141 "p pixel_data[0..10]"
+# --uncomment line 163 "p new_data[0..10]"
+# => pixel_data [[69, 70, 77], [30, 32, 36], [46, 54, 28], [46, 50, 26], [45, 50, 25], 
+#   [45, 50, 25], [44, 49, 24], [44, 49, 24], [45, 49, 24], [45, 49, 24], [43, 49, 24]]
+# => new_data [[69, 70, 64], [30, 32, 37], [46, 54, 17], [46, 50, 16], [45, 50, 25], [45, 50, 25], 
+#   [44, 49, 24], [44, 49, 24], [45, 49, 24], [45, 49, 24], [43, 49, 24]]
