@@ -59,12 +59,12 @@ end
 def encode(hex, digit)
     hex = hex.delete_prefix("#")
     # return hex[-1]
-    # if hex[-1] == "0" || hex[-1] == "1" || hex[-1] == "2" || hex[-1] == "3" || hex[-1] == "4" || hex[-1] == "5"
+    if hex[-1] == "0" || hex[-1] == "1" || hex[-1] == "2" || hex[-1] == "3" || hex[-1] == "4" || hex[-1] == "5"
         hex[-1] = digit
         return hex
-    # else 
-    #     return hex
-    # end
+    else 
+        return hex
+    end
 end
 
 # Test to see if encode works as expected
@@ -137,9 +137,6 @@ end
 # => [[247, 247, 247], [247, 247, 247], [247, 247, 247], [247, 247, 247], 
 #       [247, 251, 251], [247, 253, 253], [247, 247, 247], ..., [243, 192, 193]]
 
-image = ChunkyPNG::Image.from_file('3BA5A5.png')
-p get_pixel_data(image)[0..7]
-
 # Creates an image from an array of pixel data
 def create_image_with_pixel(pixels, image)
     new_img = ChunkyPNG::Image.new("#{image.dimension.width}".to_i,"#{image.dimension.height}".to_i, ChunkyPNG::Color::TRANSPARENT)
@@ -155,6 +152,63 @@ def create_image_with_pixel(pixels, image)
     return new_img
 end
 
+# STEPS
+
+# 1. Get rgb pixel data for original image
+# 2. Convert pixel data to hex 
+# 3. Encode hex data
+# 4. Convert back to rgb 
+# 5. Make new image with encoded rgb pixels
+# 6. Convert new image pixel data to hex
+# 7. Decode hex data 
+# 8. Populate binary string 
+# 9. Convert binary string 
+
+
+string = "01100001"
+
+image = ChunkyPNG::Image.from_file('3BA5A5.png')
+image_pixel_data = get_pixel_data(image)[0..7]
+p image_pixel_data
+
+image_hex_data = []
+image_pixel_data.each do |pixel|
+    image_hex_data << rgb2hex(pixel)
+end
+p image_hex_data
+
+image_hex_data_encoded = []
+image_hex_data.each_with_index do |hex, index|
+    image_hex_data_encoded << encode(hex, string[index])
+end
+p image_hex_data_encoded
+
+image_hex_data_encoded_to_rgb = []
+image_hex_data_encoded.each do |hex|
+    image_hex_data_encoded_to_rgb << hex2rgb(hex)
+end
+p image_hex_data_encoded_to_rgb
+
+binary = ""
+
+image_hex_data_encoded.each do |hex|
+    binary += decode(hex)
+end
+puts binary
+puts bin2str(binary)
+
+
+# new_image = create_image_with_pixel(image_pixel_data, image)
+# new_image_pixel_data = get_pixel_data(new_image)
+# p new_image_pixel_data[0..7]
+
+# new_image_hex_data = []
+# new_image_pixel_data.each do |pixel|
+#     new_image_hex_data << rgb2hex(pixel)
+# end
+# p new_image_hex_data[0..7]
+
+
 # Test to see if create_image_with_pixel works as expected
 # image = ChunkyPNG::Image.from_file('r_tiny.png')
 # new_img = create_image_with_pixel(get_pixel_data(image), image)
@@ -164,50 +218,50 @@ end
 def hide(message)
     delimiter = '1111111111111110'
     binary_message = str2bin(message) + delimiter
-    # p binary_message
-    # p bin2str(binary_message[0..-17])
+    p binary_message
+    p bin2str(binary_message[0..-17])
 
-    puts "Enter image path"
-    path = gets.chomp
-    if File.extname(path) == ".png"
-        img = ChunkyPNG::Image.from_file(path)
-        old_data = get_pixel_data(img)
+    # puts "Enter image path"
+    # path = gets.chomp
+    # if File.extname(path) == ".png"
+    #     img = ChunkyPNG::Image.from_file(path)
+    #     old_data = get_pixel_data(img)
 
-        # part of test
-        # p old_data[0..10]
+    #     # part of test
+    #     # p old_data[0..10]
 
-        # all of our new pixel data
-        new_data = []
-        # the current place we are up to in our binary
-        binary_message_index = 0
-        temp = ''
-        # hex_data = []
-        # for each pixel in old_data
-        old_data.each do |pixel|
-            # hex_data << rgb2hex(pixel)
+    #     # all of our new pixel data
+    #     new_data = []
+    #     # the current place we are up to in our binary
+    #     binary_message_index = 0
+    #     temp = ''
+    #     # hex_data = []
+    #     # for each pixel in old_data
+    #     old_data.each do |pixel|
+    #         # hex_data << rgb2hex(pixel)
 
-            # if binary_message_index is less than the length of the binary then try and story data
-            if binary_message_index < binary_message.length
-                # encode new pixels 
+    #         # if binary_message_index is less than the length of the binary then try and story data
+    #         if binary_message_index < binary_message.length
+    #             # encode new pixels 
 
-                new_pixel = encode(rgb2hex(pixel), binary_message[binary_message_index])
+    #             new_pixel = encode(rgb2hex(pixel), binary_message[binary_message_index])
 
-                new_data << hex2rgb(new_pixel)
-                binary_message_index += 1
-            else
-                new_data << pixel
-            end
-        end
-        # p hex_data
-        # part of test
-        # p new_data[0..10]
+    #             new_data << hex2rgb(new_pixel)
+    #             binary_message_index += 1
+    #         else
+    #             new_data << pixel
+    #         end
+    #     end
+    #     # p hex_data
+    #     # part of test
+    #     # p new_data[0..10]
 
-        new_img = create_image_with_pixel(new_data, img)
-        new_img.save("test#{path}")
-        puts "Successful image save"
-    else
-        puts "Invalid file"
-    end
+    #     new_img = create_image_with_pixel(new_data, img)
+    #     new_img.save("test#{path}")
+    #     puts "Successful image save"
+    # else
+    #     puts "Invalid file"
+    # end
 end
 
 # Test if hide is working as expected 
@@ -248,12 +302,12 @@ def find
             if digit.nil? == false
                 binary = binary + digit
                 # p binary
-            end
-            if binary[-16..-1] == delimiter
-                puts "Success"
-                puts binary
-                puts bin2str(binary[0..-17])
-                return bin2str(binary[0..-17])
+                if binary[-16..-1] == delimiter
+                    puts "Success"
+                    puts binary
+                    # puts bin2str(binary[0..-17])
+                    return bin2str(binary[0..-17])
+                end
             end
         end
         # Edge cases - 
@@ -267,8 +321,8 @@ def find
 
 end
 
-hide("hello world, my name is jeremy")
-find
+# hide("a".strip)
+# find
 
 # binary = ""
 # delimiter = '1111111111111110'
