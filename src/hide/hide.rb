@@ -55,11 +55,12 @@ end
 # https://stackoverflow.com/questions/3505475/check-if-an-integer-is-within-a-range/18599494 
 
 
-
+# BUG IS HERE 
 def encode(hex, digit)
     hex = hex.delete_prefix("#")
-    if (0..5) === hex[-1].to_i
-        hex[-1] = (hex[-1].to_i + digit.to_i).to_s
+    # return hex[-1]
+    if hex[-1] == "0" || hex[-1] == "1" || hex[-1] == "2" || hex[-1] == "3" || hex[-1] == "4" || hex[-1] == "5"
+        hex[-1] = digit
         return hex
     else 
         return hex
@@ -67,22 +68,48 @@ def encode(hex, digit)
 end
 
 # Test to see if encode works as expected
-# puts encode("#f57841", 1)
+# puts encode("f57840", "0")
+# puts encode("f57841", "1")
+# puts encode("f57842", "1")
+# puts encode("f57843", "0")
+# puts encode("f57844", "1")
+# puts encode("f57845", "0")
+# puts encode("f57846", "1")
+# puts encode("f57847", "1")
+# puts encode("f57848", "1")
+# puts encode("f57849", "1")
+# puts encode("f5784b", "1")
+# puts encode("f5784c", "1")
+# puts encode("f5784d", "1")
+# puts encode("f5784e", "1")
+# puts encode("f5784f", "1")
+
 # => "f57842"
 
 def decode(hex) 
     hex = hex.delete_prefix("#")
-    if (0..1) === hex[-1].to_i
-        return hex[-1]
+    if hex[-1] == "0"
+        return "0"
+    elsif hex[-1] == "1"
+        return "1"
     else
-        return
+        return nil
     end
 end
 
+
+
 # Test to see if decode works as expected
-# puts decode("#f57841").class
+# puts decode("#f57841")
 # => "1"
 
+# puts decode("#f57847")
+# puts decode("#f57841")
+# puts decode("#f57842")
+# puts decode("#f57840")
+# puts decode("#f57844")
+# puts decode("#f57845")
+# puts decode("#f57846")
 
 # https://stackoverflow.com/a/11907718
 
@@ -138,7 +165,7 @@ def hide(message)
         old_data = get_pixel_data(img)
 
         # part of test
-        p old_data[0..10]
+        # p old_data[0..10]
 
         # all of our new pixel data
         new_data = []
@@ -160,18 +187,86 @@ def hide(message)
         end
 
         # part of test
-        p new_data[0..10]
+        # p new_data[0..10]
 
         new_img = create_image_with_pixel(new_data, img)
         new_img.save("test#{path}")
+        puts "Successful image save"
+    else
+        puts "Invalid file"
     end
 end
 
 # Test if hide is working as expected 
-hide("hello")
+
 # --uncomment line 141 "p pixel_data[0..10]"
 # --uncomment line 163 "p new_data[0..10]"
 # => pixel_data [[69, 70, 77], [30, 32, 36], [46, 54, 28], [46, 50, 26], [45, 50, 25], 
 #   [45, 50, 25], [44, 49, 24], [44, 49, 24], [45, 49, 24], [45, 49, 24], [43, 49, 24]]
 # => new_data [[69, 70, 64], [30, 32, 37], [46, 54, 17], [46, 50, 16], [45, 50, 25], [45, 50, 25], 
 #   [44, 49, 24], [44, 49, 24], [45, 49, 24], [45, 49, 24], [43, 49, 24]]
+
+# binary = "01001000011001010110110001101100011011110010000001110111011011110111001001101100011001001111111111111110"
+# delimiter = '1111111111111110'
+#     if binary[-16..-1] == delimiter
+#         puts "Done"
+#         puts "#{bin2str(binary[0..-17])}"
+#     else
+#         puts "It's bwoken"
+#     end
+
+def find
+    binary = ""
+    delimiter = '1111111111111110'
+
+    puts "Enter image path"
+    path = gets.chomp
+
+    if File.extname(path) == ".png"
+        img = ChunkyPNG::Image.from_file(path)
+        pixel_data = get_pixel_data(img)
+
+        binary = ""
+        delimiter = "1111111111111110"
+
+        pixel_data.each do |pixel|
+            
+            digit = decode(rgb2hex(pixel))
+            if digit.nil? == false
+                binary = binary + digit
+                p binary
+                if binary[-16..-1] == delimiter
+                    puts "Success"
+                    return bin2str(binary[0..-17])
+                end
+            end
+        end
+        # Edge cases - 
+        # Reach end of each and haven't hit delimiter
+        # possible if message is longer than image size
+        puts   bin2str(binary)  
+        return bin2str(binary)
+    else
+        puts "Invalid file"
+    end
+
+end
+
+hide("a")
+find
+
+# binary = ""
+# delimiter = '1111111111111110'
+# for each pixel in old_data
+# pixel_data.each do |pixel|
+    
+    # digit = decode(rgb2hex([69, 70, 76])).to_i
+    # p digit
+#     if digit.nil? == false
+#         binary = binary + digit
+#         if binary[-16..-1] == delimiter
+#             puts "Success"
+#             return bin2str(binary[0..-17])
+#         end
+#     end
+# end
