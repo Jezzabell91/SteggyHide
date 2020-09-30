@@ -55,7 +55,7 @@ end
 # https://stackoverflow.com/questions/3505475/check-if-an-integer-is-within-a-range/18599494 
 
 
-# BUG IS HERE 
+# BUG IS HERE - works now i think
 def encode(hex, digit)
     hex = hex.delete_prefix("#")
     # return hex[-1]
@@ -97,7 +97,12 @@ def decode(hex)
     end
 end
 
-
+# puts decode(rgb2hex([247, 247, 247]))
+# puts decode(rgb2hex([243, 192, 193]))
+# puts decode(rgb2hex([45, 49, 24]))
+# puts decode(rgb2hex([30, 32, 34]))
+# puts rgb2hex([30, 32, 34])
+# puts decode(rgb2hex([46, 50, 16]))
 
 # Test to see if decode works as expected
 # puts decode("#f57841")
@@ -157,44 +162,50 @@ end
 def hide(message)
     delimiter = '1111111111111110'
     binary_message = str2bin(message) + delimiter
+    p binary_message
+    p bin2str(binary_message[0..-17])
 
-    puts "Enter image path"
-    path = gets.chomp
-    if File.extname(path) == ".png"
-        img = ChunkyPNG::Image.from_file(path)
-        old_data = get_pixel_data(img)
+    # puts "Enter image path"
+    # path = gets.chomp
+    # if File.extname(path) == ".png"
+    #     img = ChunkyPNG::Image.from_file(path)
+    #     old_data = get_pixel_data(img)
 
-        # part of test
-        # p old_data[0..10]
+    #     # part of test
+    #     # p old_data[0..10]
 
-        # all of our new pixel data
-        new_data = []
-        # the current place we are up to in our binary
-        binary_message_index = 0
-        temp = ''
+    #     # all of our new pixel data
+    #     new_data = []
+    #     # the current place we are up to in our binary
+    #     binary_message_index = 0
+    #     temp = ''
+    #     # hex_data = []
+    #     # for each pixel in old_data
+    #     old_data.each do |pixel|
+    #         # hex_data << rgb2hex(pixel)
 
-        # for each pixel in old_data
-        old_data.each do |pixel|
-            # if binary_message_index is less than the length of the binary then try and story data
-            if binary_message_index < binary_message.length
-                # encode new pixels 
-                new_pixel = encode(rgb2hex(pixel), binary_message[binary_message_index])
-                new_data << hex2rgb(new_pixel)
-                binary_message_index += 1
-            else
-                new_data << pixel
-            end
-        end
+    #         # if binary_message_index is less than the length of the binary then try and story data
+    #         if binary_message_index < binary_message.length
+    #             # encode new pixels 
 
-        # part of test
-        # p new_data[0..10]
+    #             new_pixel = encode(rgb2hex(pixel), binary_message[binary_message_index])
 
-        new_img = create_image_with_pixel(new_data, img)
-        new_img.save("test#{path}")
-        puts "Successful image save"
-    else
-        puts "Invalid file"
-    end
+    #             new_data << hex2rgb(new_pixel)
+    #             binary_message_index += 1
+    #         else
+    #             new_data << pixel
+    #         end
+    #     end
+    #     # p hex_data
+    #     # part of test
+    #     # p new_data[0..10]
+
+    #     new_img = create_image_with_pixel(new_data, img)
+    #     new_img.save("test#{path}")
+    #     puts "Successful image save"
+    # else
+    #     puts "Invalid file"
+    # end
 end
 
 # Test if hide is working as expected 
@@ -234,9 +245,11 @@ def find
             digit = decode(rgb2hex(pixel))
             if digit.nil? == false
                 binary = binary + digit
-                p binary
+                # p binary
                 if binary[-16..-1] == delimiter
                     puts "Success"
+                    puts binary
+                    # puts bin2str(binary[0..-17])
                     return bin2str(binary[0..-17])
                 end
             end
@@ -252,8 +265,8 @@ def find
 
 end
 
-hide("a")
-find
+hide("a".strip)
+# find
 
 # binary = ""
 # delimiter = '1111111111111110'
