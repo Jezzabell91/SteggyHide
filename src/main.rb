@@ -1,5 +1,6 @@
 require_relative 'classes/start_page.rb'
 require_relative 'methods/steg_methods.rb'
+require_relative 'methods/font_methods.rb'
 
 steggy_start = Start_Page.new(:title => "SteggyHide",
     :creator => "Jeremy Bell",
@@ -44,20 +45,19 @@ def main_menu
 end
 
 def hide_feature
-    prompt = TTY::Prompt.new
-
-    if prompt.yes?("Do you want to list .png files in current directory?") == true
-        list_png
-    end
-
+    header_style("HIDE")
+    list_prompt
     path = get_filepath
     message = get_message
     hide(message, path)
-
 end
 
 def find_feature
-    puts "Enter image file path for the image you wish to find a message in. (must end in .png)"
+    header_style("FIND")
+    list_prompt
+    path = get_filepath
+    find(path)
+
 end
 
 steggy_start.print_start_page

@@ -1,5 +1,7 @@
 require 'chunky_png'
+require 'open3'
 require_relative '../classes/not_png_error.rb'
+require_relative '../classes/file_missing_error.rb'
 
 # Takes an array with values [r, g, b] and converts to hexidecimal
 def rgb2hex(rgb)
@@ -114,12 +116,12 @@ def get_filepath
     begin
         puts "\nEnter image file path. (must end in .png)"
         puts "Type exit to return to main menu"
-
         path = gets.chomp
         exit_to_menu?(path)
         raise NotPngError unless path[-4..-1] == ".png"
-    rescue
-        puts "Invalid filetype."
+        raise FileMissing unless File.exist?(path)
+        rescue
+            puts "Invalid filetype or file not found"
         retry
     end
     return path
@@ -133,8 +135,17 @@ def get_message
 end
 
 def list_png
+    stdout, stderr, status = Open3.capture3("ls *.png")
     puts "PNG Files in:  " + "#{`pwd`}"
-    puts `ls *.png`
+    puts stdout
+end
+
+def list_prompt
+    prompt = TTY::Prompt.new
+
+    if prompt.yes?("Do you want to list .png files in current directory?") == true
+        list_png
+    end
 end
 
 

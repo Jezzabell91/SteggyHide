@@ -3,3 +3,6 @@ class NotPngError < StandardError
         super(msg)
     end
 end
+
+
+
