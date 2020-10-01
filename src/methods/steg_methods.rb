@@ -2,6 +2,8 @@ require 'chunky_png'
 require 'open3'
 require_relative '../classes/not_png_error.rb'
 require_relative '../classes/file_missing_error.rb'
+require_relative '../classes/message_too_big_error.rb'
+require_relative 'font_methods.rb'
 
 # Takes an array with values [r, g, b] and converts to hexidecimal
 def rgb2hex(rgb)
@@ -79,38 +81,60 @@ def hide(message, path)
     delimiter = '1111111111111110'
     binary_message = str2bin(message) + delimiter
 
-    if File.extname(path) == ".png"
-        img = ChunkyPNG::Image.from_file(path)
-        old_data = get_pixel_data(img)
+    img = ChunkyPNG::Image.from_file(path)
+    old_data = get_pixel_data(img)
+    begin
+        raise MessageTooBig unless binary_message.length < old_data.length
+        rescue MessageTooBig => e
+            puts error_style(e.message)
+            return_to_menu
+    end 
 
-        new_data = []
+    new_data = []
 
-        binary_message_index = 0
-        temp = ''
+    binary_message_index = 0
+    temp = ''
 
-        old_data.each do |pixel|
+    old_data.each do |pixel|
 
-            if binary_message_index < binary_message.length
+        if binary_message_index < binary_message.length
 
-                new_pixel = encode(rgb2hex(pixel), binary_message[binary_message_index])
+            new_pixel = encode(rgb2hex(pixel), binary_message[binary_message_index])
 
-                new_data << hex2rgb(new_pixel)
-                binary_message_index += 1
-            else
-                new_data << pixel
-            end
+            new_data << hex2rgb(new_pixel)
+            binary_message_index += 1
+        else
+            new_data << pixel
         end
-
-        new_img = create_image_with_pixel(new_data, img)
-        puts "Enter the file path where you want the new image saved! (must end in .png)"
-        new_path = get_filepath 
-        new_img.save("#{new_path}")
-        puts "Image saved - #{`pwd`.chomp + '/' + new_path}"
-    else
-        puts "Invalid file"
     end
+
+    new_img = create_image_with_pixel(new_data, img)
+    save_image(new_img)
+
+    # new_path = get_filepath 
+    # new_img.save("#{new_path}")
+    # puts "Image saved - #{`pwd`.chomp + '/' + new_path}"
+    return_to_menu
 end
 
+def save_image(image_data)
+    path = save_filepath
+    image_data.save(path)
+    
+    puts success_style("Image saved - #{`pwd`.chomp + '/' + path}")
+end
+
+def save_filepath
+    begin
+        puts "\nEnter the filename for the new image (must end in .png)"
+        path = gets.chomp
+        raise NotPngError unless path[-4..-1] == ".png"
+        rescue
+            puts "Invalid file name"
+        retry
+    end
+    return path
+end
 
 def get_filepath
     begin
@@ -120,8 +144,14 @@ def get_filepath
         exit_to_menu?(path)
         raise NotPngError unless path[-4..-1] == ".png"
         raise FileMissing unless File.exist?(path)
-        rescue
-            puts "Invalid filetype or file not found"
+        rescue NotPngError, FileMissing => e
+            puts error_style(e.message)
+            # unless path[-4..-1] == ".png"
+            #     puts e.message
+            # else
+            #     puts "File not found"
+            # end
+                            # puts "Invalid filetype or file not found"
         retry
     end
     return path
@@ -155,12 +185,26 @@ def exit_to_menu?(str)
     end
 end
 
-def find
+def return_to_menu
+    puts "Returning to menu"
+    sleep(4)
+    main_menu
+end
 
-    puts "Enter image path"
-    path = gets.chomp
+def write_to_file(binary_message, path)
+    prompt = TTY::Prompt.new
+    if prompt.yes?("Do you want to save the message to a .txt file?") == true
+        File.write("#{path[0..-5]}.txt", bin2str(binary_message))
+        puts success_style("Message was saved to #{path[0..-5]}.txt")
+        return_to_menu
+    else
+        puts "Message was not saved"
+        return_to_menu
+    end
+end
 
-    if File.extname(path) == ".png"
+def find(path)
+
         img = ChunkyPNG::Image.from_file(path)
         pixel_data = get_pixel_data(img)
 
@@ -178,17 +222,16 @@ def find
                 next
             end
             if binary[-16..-1] == delimiter
-                puts "Success"
-                puts binary
-                puts bin2str(binary[0..-17])
-                return bin2str(binary[0..-17])
+                puts success_style("Message was successfully found")
+                binary_message = binary[0..-17]
+                message = bin2str(binary_message)
+                puts "Message reads: "
+                puts message
+                write_to_file(message, path)
             end
         end
-    else
-        puts "Invalid file"
-    end
+
+        puts "Message was not found or was unable to be recovered"
+        return_to_menu
 
 end
-
-# hide("hello world, my name is jeremy")
-# find

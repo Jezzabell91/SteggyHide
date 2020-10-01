@@ -21,7 +21,7 @@ def main_menu
         
         menu.choice "Hide a message in an image", 1
         menu.choice "Find a message in an image", 2
-        menu.choice "Batch check images for hidden messages", 3
+        menu.choice "Learn about steganography", 3
         menu.choice "Open help documentations", 4
         menu.choice "Exit!", 5
         end
@@ -30,7 +30,7 @@ def main_menu
         hide_feature
     when 2
         system "clear"
-        puts "What is the image filepath?" 
+        find_feature
     when 3
         system "clear"
         puts "What is the directory filepath?" 
@@ -45,6 +45,7 @@ def main_menu
 end
 
 def hide_feature
+    system "clear"
     header_style("HIDE")
     list_prompt
     path = get_filepath
@@ -53,6 +54,7 @@ def hide_feature
 end
 
 def find_feature
+    system "clear"
     header_style("FIND")
     list_prompt
     path = get_filepath
