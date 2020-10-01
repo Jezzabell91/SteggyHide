@@ -44,9 +44,12 @@ def main_menu
 end
 
 def hide_feature
-    
-    puts "Enter image file path for the image you wish to hide a message in. (must end in .png)"
-    puts "Or type exit to return to main menu"
+    prompt = TTY::Prompt.new
+
+    if prompt.yes?("Do you want to list .png files in current directory?") == true
+        list_png
+    end
+
     path = get_filepath
     message = get_message
     hide(message, path)

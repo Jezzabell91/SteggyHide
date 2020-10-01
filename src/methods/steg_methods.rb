@@ -1,4 +1,5 @@
 require 'chunky_png'
+require_relative '../classes/not_png_error.rb'
 
 # Takes an array with values [r, g, b] and converts to hexidecimal
 def rgb2hex(rgb)
@@ -102,7 +103,7 @@ def hide(message, path)
         puts "Enter the file path where you want the new image saved! (must end in .png)"
         new_path = get_filepath 
         new_img.save("#{new_path}")
-        puts "Image saved - #{new_path}"
+        puts "Image saved - #{`pwd`.chomp + '/' + new_path}"
     else
         puts "Invalid file"
     end
@@ -110,9 +111,17 @@ end
 
 
 def get_filepath
-    path = gets.chomp
-    exit_to_menu?(path)
-    raise StandardError unless path[-4..-1] == ".png"
+    begin
+        puts "\nEnter image file path. (must end in .png)"
+        puts "Type exit to return to main menu"
+
+        path = gets.chomp
+        exit_to_menu?(path)
+        raise NotPngError unless path[-4..-1] == ".png"
+    rescue
+        puts "Invalid filetype."
+        retry
+    end
     return path
 end
 
@@ -122,6 +131,12 @@ def get_message
     exit_to_menu?(message)
     return message
 end
+
+def list_png
+    puts "PNG Files in:  " + "#{`pwd`}"
+    puts `ls *.png`
+end
+
 
 def exit_to_menu?(str)
     if str == "exit"
