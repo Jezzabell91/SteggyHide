@@ -1,4 +1,5 @@
 require 'chunky_png'
+require 'pry'
 
 # Takes an array with values [r, g, b] and converts to hexidecimal
 def rgb2hex(rgb)
@@ -57,10 +58,12 @@ end
 
 # BUG IS HERE - works now i think
 def encode(hex, digit)
-    hex = hex.delete_prefix("#")
+    # hex = hex.delete_prefix("#")
     # return hex[-1]
+    # binding.pry
     # if hex[-1] == "0" || hex[-1] == "1" || hex[-1] == "2" || hex[-1] == "3" || hex[-1] == "4" || hex[-1] == "5"
         hex[-1] = digit
+        # binding.pry
         return hex
     # else 
     #     return hex
@@ -93,7 +96,7 @@ def decode(hex)
     elsif hex[-1] == "1"
         return "1"
     else
-        return nil
+        return "nope"
     end
 end
 
@@ -186,7 +189,7 @@ def hide(message)
         old_data.each do |pixel|
             # hex_data << rgb2hex(pixel)
 
-            # if binary_message_index is less than the length of the binary then try and story data
+            # if binary_message_index is less than the length of the binary then try and store data
             if binary_message_index < binary_message.length
                 # encode new pixels 
 
@@ -194,6 +197,7 @@ def hide(message)
 
                 new_data << hex2rgb(new_pixel)
                 binary_message_index += 1
+                # binding.pry
             else
                 new_data << pixel
             end
@@ -229,9 +233,6 @@ end
 #     end
 
 def find
-    binary = ""
-    delimiter = '1111111111111110'
-
     puts "Enter image path"
     path = gets.chomp
 
@@ -245,9 +246,14 @@ def find
         pixel_data.each do |pixel|
             
             digit = decode(rgb2hex(pixel))
-            if digit.nil? == false
-                binary = binary + digit
-                # p binary
+            if digit == "0"
+                # binding.pry
+                binary += "0"
+            elsif digit == "1"
+                # binding.pry
+                binary += "1"
+            else
+                next
             end
             if binary[-16..-1] == delimiter
                 puts "Success"
@@ -259,8 +265,8 @@ def find
         # Edge cases - 
         # Reach end of each and haven't hit delimiter
         # possible if message is longer than image size
-        puts   bin2str(binary)  
-        return bin2str(binary)
+        # puts   bin2str(binary)  
+        # return bin2str(binary)
     else
         puts "Invalid file"
     end
