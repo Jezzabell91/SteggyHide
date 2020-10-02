@@ -1,4 +1,4 @@
-### Develop a list of features that will be included in the application. It must include:
+## Features
 - at least THREE features
 - describe each feature
 
@@ -7,13 +7,12 @@ Note: Ensure that your features above allow you to demonstrate your understandin
 - loops and conditional control structures
 - error handling
 
-#### Feature 1: Hide message in an image
+### Feature 1: Hide message in an image
 This feature allows the user to hide a message within an image and then save a new image with the message encoded. The application can only handle .png image files as the ChunkyPNG gem is used to handle image functions. Errors are handled if the wrong filetype is used, if the image file does not exist or if the message is too large to hide in the chosen image. 
 
 
-
-#### Feature 2: Find message in an image
+### Feature 2: Find message in an image
 This feature allows the user to find a message within an image and then gives the user the option to save the message in a text file. If no message is found the user is informed. In the current version SteggyHide is only able to find messages that have been hidden using SteggyHide. If there is a hidden message that was encoded by another method, they will not be found by SteggyHide. 
 
 
-#### Feature 3: Learn about steganography
+### Feature 3: Learn about steganography
