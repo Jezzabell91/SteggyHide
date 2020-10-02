@@ -9,8 +9,6 @@ steggy_start = Start_Page.new(:title => "SteggyHide",
 )
 
 
-
-
 def main_menu
     system "clear"
     prompt = TTY::Prompt.new
