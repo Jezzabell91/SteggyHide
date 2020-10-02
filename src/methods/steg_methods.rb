@@ -93,7 +93,6 @@ def hide(message, path)
     new_data = []
 
     binary_message_index = 0
-    temp = ''
 
     old_data.each do |pixel|
 
