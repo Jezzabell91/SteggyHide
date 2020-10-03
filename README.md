@@ -12,7 +12,7 @@ Secrets can be fun and SteggyHide allows a user to create secrets to share, read
 The audience is primarily for groups of friends who want to show off something cool to each other and share in a bit of fun. Curious learners will also find it useful to discover steganography, something that they may not have even been aware of. 
 
 ### How is it used? 
-A user will start the application in the terminal and they can pass in options as command line arguments. Command line options include %%%%%%%%%% Once the application has started and the user goes past the start page they will be presented with an options menu which will present them with the options to hide a message, find a message, use conversion tools, access help documentation to understand how to use the application and finally an option to exit the application. 
+A user will start the application in the terminal and they can pass in options as command line arguments. Command line options include -h, --help, -hex, -rgb. Once the application has started and the user goes past the start page they will be presented with an options menu which will present them with the options to hide a message, find a message, use conversion tools, access help documentation to understand how to use the application and finally an option to exit the application. 
 
 ### Overall Scope
 The scope of SteggyHide is limited and this is due to time constraints and current knowledge constraints. It can only handle PNG image files and secret messages can only be found if they were previously encoded by SteggyHide. The encoding method is very inelegant and unrefined. In future versions I would like to implement different methods of encoding, ability to handle most image types, ability to decode from externally encoded images. 
@@ -69,6 +69,22 @@ If the user selects "Hexadecimal to RGB" they will be prompted to enter a hexade
 If the user selects "RGB to Hexadecimal" they are prompted to enter values for red, green and blue. The function converts this to a hexadecimal value which is printed on the screen. If any of the values are outside the range 0 - 255 an error is raised and the user is prompted to input values within that range. 
 
 ---
+
+## Control Flow Diagram
+
+[Link to lucidchart page](https://app.lucidchart.com/invitations/accept/2a618f48-a673-4aec-8363-8f1c875abf8b)
+
+![Control Flow Diagram](docs/steggyhide_control_flow.png)
+
+---
+
+## Implementation Plan
+
+[Link to trello board](https://trello.com/b/kLixh3kr/steggyhide)
+
+[Trello Log](docs/trello_log.pdf)
+
+--
 
 ## Help Documentation
 
