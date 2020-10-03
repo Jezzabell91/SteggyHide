@@ -111,10 +111,6 @@ def hide(message, path)
 
     new_img = create_image_with_pixel(new_data, img)
     save_image(new_img)
-
-    # new_path = get_filepath 
-    # new_img.save("#{new_path}")
-    # puts "Image saved - #{`pwd`.chomp + '/' + new_path}"
     return_to_menu
 end
 
@@ -147,12 +143,6 @@ def get_filepath
         raise FileMissing unless File.exist?(path)
         rescue NotPngError, FileMissing => e
             puts error_style(e.message)
-            # unless path[-4..-1] == ".png"
-            #     puts e.message
-            # else
-            #     puts "File not found"
-            # end
-                            # puts "Invalid filetype or file not found"
         retry
     end
     return path
@@ -223,13 +213,11 @@ def find(path)
                 next
             end
             if binary[-32..-1] == delimiter
-                # binding.pry
                 puts success_style("Message was successfully found")
                 binary_message = binary[0..-33]
                 message = bin2str(binary_message)
                 puts "Message reads: "
                 puts message
-                # binding.pry
                 write_to_file(message, path)
             end
         end
