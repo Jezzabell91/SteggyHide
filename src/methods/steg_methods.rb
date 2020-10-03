@@ -7,9 +7,6 @@ require_relative '../classes/message_too_big_error.rb'
 require_relative 'font_methods.rb'
 require_relative 'conversion_methods.rb'
 
-require 'pry'
-
-
 
 def encode(hex, digit)
         hex[-1] = digit
@@ -145,6 +142,12 @@ def list_prompt
     end
 end
 
+def exit_app
+    puts "Exiting"
+    sleep(2)
+    system "clear"
+    exit
+end
 
 def exit_to_menu?(str)
     if str == "exit"
@@ -157,7 +160,7 @@ def return_to_menu?
     if prompt.yes?("Do you want to return to the main menu?") == true
         return_to_menu
     else
-        exit
+        exit_app
     end
 end
 

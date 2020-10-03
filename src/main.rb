@@ -1,3 +1,4 @@
+require_relative 'help.rb'
 require_relative 'classes/start_page.rb'
 require_relative 'methods/steg_methods.rb'
 require_relative 'methods/font_methods.rb'
@@ -35,13 +36,12 @@ def main_menu
         conversion_feature
     when 4
         system "clear"
-        puts "Opening documentations"        
+        print_help       
     when 5
-        system "clear"
-        puts "Exiting"
-        exit
+        exit_app
     end
 end
+
 
 def hide_feature
     system "clear"
