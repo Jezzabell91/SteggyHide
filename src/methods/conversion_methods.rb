@@ -3,6 +3,7 @@ require_relative 'steg_methods.rb'
 require_relative '../classes/not_hex_error.rb'
 require_relative '../classes/not_rgb_error.rb'
 require_relative '../classes/not_binary_error.rb'
+require_relative '../classes/string_too_big_error.rb'
 
 # Takes an array with values [r, g, b] and converts to hexidecimal
 def rgb2hex(rgb)
@@ -181,24 +182,24 @@ def convert_string_to_binary
             
             string = gets.chomp 
 
-            # remove any spaces from the string 
-
-            raise StringTooBigError unless string.size > 512
-            rescue StringTooBigError => e
+            raise StringTooBig unless string.size < 512
+            rescue StringTooBig => e
                 puts error_style(e.message)
             retry
 
         end
-        puts "\nConverting binary to string\n"
+        puts "\nConverting string to binary\n"
         
-        string = bin2str(binary)
+        binary = str2bin(string)
         
         sleep(1)
-        
-        puts string
+
+        # Formats the binary string with spaces e.g. "string" becomes: 
+        # 01110011 01110100 01110010 01101001 01101110 01100111 
+        puts binary.scan(/.{8}/).join(' ')
         
         prompt = TTY::Prompt.new
-        if prompt.yes?("\nWould you like to do another binary to string conversion?") == true 
+        if prompt.yes?("\nWould you like to do another string to binary conversion?") == true 
         else
             return_to_menu
         end
@@ -209,14 +210,3 @@ end
 # convert_rgb_to_hex 
 # convert_binary_to_string
 # convert_string_to_binary
-
-string = "01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100 01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
-01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
-01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
-01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
-01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
-01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
-01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
-01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100"
-
-p string.size
