@@ -10,6 +10,14 @@ steggy_start = Start_Page.new(:title => "SteggyHide",
     :version => "0.10"
 )
 
+def process_argv
+    case ARGV[0]
+    when "-hex"
+        argv_convert_hex_to_rgb
+        exit
+    end
+
+end
 
 def main_menu
     system "clear"
@@ -94,5 +102,6 @@ def conversion_feature
     end
 end
 
+process_argv
 steggy_start.print_start_page
 main_menu

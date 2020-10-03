@@ -37,12 +37,19 @@ def bin2str(binary)
     return str
 end
 
-
+def argv_convert_hex_to_rgb
+    hex = ARGV[1]
+    hex = hex.delete_prefix("#")
+    hex = hex.delete_prefix("0x")
+    raise NotHexError unless hex.match(/[[:xdigit:]]{3,6}/)
+    puts "\nConverting: ##{hex.upcase} to RGB\n"
+    rgb = hex2rgb(hex)
+    p rgb
+end
 
 def convert_hex_to_rgb
     system "clear"
     puts "#{header_style("HEX  to  RGB")}"
-
 
     loop do
         begin

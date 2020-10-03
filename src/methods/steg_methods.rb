@@ -151,7 +151,7 @@ end
 
 def exit_to_menu?(str)
     if str == "exit"
-        main_menu
+        return_to_menu
     end
 end
 
