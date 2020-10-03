@@ -7,7 +7,28 @@ def print_help
     pastel = Pastel.new
     puts pastel.cyan(font.write("HELP"))
 
-    puts "Instructions on how to use each feature: "
+    puts "COMMAND LINE ARGUMENTS"
+
+    puts "\nCOMMAND: -h"
+    puts "COMMAND: --help"
+    puts "Takes you to straight to this help documentation"
+
+    puts "\nCOMMAND: -hex 'hexvalue'"
+    puts "Use the -hex argument with a hex value with 3 to 6 digits to convert to RGB values"
+    puts "Please note command line arguments cannot begin with #"
+    puts "Examples:"
+    puts "-hex a12fed"
+    puts "-hex 0x23EEFD"
+    puts "-hex #DE3 -> will result in an error"
+
+
+    puts "\nCOMMAND: -rgb 'red' 'green' 'blue'"
+    puts "Use the -rgb argument with RGB values. Each value needs to be an integer between 0 and 255."
+    puts "Example:"
+    puts "-rgb 231 34 67"
+
+
+    puts "\nInstructions on how to use each feature: ".upcase
 
     puts "\nHide a message".upcase
 

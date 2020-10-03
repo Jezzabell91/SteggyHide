@@ -4,6 +4,7 @@ require_relative '../classes/not_hex_error.rb'
 require_relative '../classes/not_rgb_error.rb'
 require_relative '../classes/not_binary_error.rb'
 require_relative '../classes/string_too_big_error.rb'
+require_relative '../classes/argument_missing_error.rb'
 
 # Takes an array with values [r, g, b] and converts to hexidecimal
 def rgb2hex(rgb)
@@ -37,14 +38,51 @@ def bin2str(binary)
     return str
 end
 
+# Converting hex to rgb using command line arguments
 def argv_convert_hex_to_rgb
     hex = ARGV[1]
-    hex = hex.delete_prefix("#")
+    raise ArgumentMissing if ARGV[1].nil?
     hex = hex.delete_prefix("0x")
-    raise NotHexError unless hex.match(/[[:xdigit:]]{3,6}/)
+
+    raise NotHexError unless check_if_hex(hex)
+
     puts "\nConverting: ##{hex.upcase} to RGB\n"
+
     rgb = hex2rgb(hex)
     p rgb
+end
+
+# Converting rgb to hex using command line arguments
+def argv_convert_rgb_to_hex
+    rgb = []
+    rgb << ARGV[1].to_i
+    rgb << ARGV[2].to_i
+    rgb << ARGV[3].to_i
+
+    raise NotRgbError unless check_if_valid_rgb(rgb[0])
+    raise NotRgbError unless check_if_valid_rgb(rgb[1])
+    raise NotRgbError unless check_if_valid_rgb(rgb[2])
+
+    puts "\nConverting Red: #{rgb[0].to_s}, Green: #{rgb[1].to_s}, Blue: #{rgb[2].to_s}, to hexadecimal\n"
+    
+    hex = rgb2hex(rgb)
+    sleep(1)
+    puts "##{hex.upcase}"
+end
+
+def check_if_hex(hex)
+    # Hex for RGB needs to be between 3 and 6 digits
+    if hex.size < 3 || hex.size > 6
+        return false
+    end
+
+    hex.chars.each do |char|
+        # Each character must be [0-9][A-F]
+        unless char.match(/\h/)
+            return false
+        end
+    end
+    return true 
 end
 
 def convert_hex_to_rgb
@@ -54,17 +92,17 @@ def convert_hex_to_rgb
     loop do
         begin
             puts "\nTo convert to RGB enter a hexadecimal color value: "
-            hex = gets.chomp
+            hex = gets.chomp.upcase
             hex = hex.delete_prefix("#")
             hex = hex.delete_prefix("0x")
 
-            raise NotHexError unless hex.match(/[[:xdigit:]]{3,6}/)
+            raise NotHexError unless check_if_hex(hex)
             rescue NotHexError => e
                 puts error_style(e.message)
             retry
         end
         
-        puts "\nConverting: ##{hex.upcase} to RGB\n"
+        puts "\nConverting: ##{hex} to RGB\n"
         
         rgb = hex2rgb(hex)
         
@@ -92,7 +130,13 @@ def check_if_integer(value)
     return value
 end
 
-
+def check_if_valid_rgb(value)
+    # RGB values must be in the range 0-255
+    unless value >= 0 && value <= 255
+        return false
+    end
+    return true
+end
 
 def convert_rgb_to_hex
     system "clear"
@@ -107,17 +151,17 @@ def convert_rgb_to_hex
             puts "Red:"
             red = gets.chomp
             red = check_if_integer(red)
-            raise NotRgbError unless red >= 0 && red <= 255
+            raise NotRgbError unless check_if_valid_rgb(red)
 
             puts "Green:"
             green = gets.chomp
             green = check_if_integer(green)
-            raise NotRgbError unless green >= 0 && green <= 255
+            raise NotRgbError unless check_if_valid_rgb(green)
             
             puts "Blue:"
             blue = gets.chomp
             blue = check_if_integer(blue)
-            raise NotRgbError unless blue >= 0 && blue <= 255
+            raise NotRgbError unless check_if_valid_rgb(blue)
             
             rgb << red
             rgb << green 

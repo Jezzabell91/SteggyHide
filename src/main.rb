@@ -15,8 +15,16 @@ def process_argv
     when "-hex"
         argv_convert_hex_to_rgb
         exit
+    when "-rgb"
+        argv_convert_rgb_to_hex
+        exit
+    when "-h"
+        print_help
+        exit
+    when "--help"
+        print_help
+        exit
     end
-
 end
 
 def main_menu
