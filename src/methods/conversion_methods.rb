@@ -2,6 +2,7 @@ require_relative 'font_methods.rb'
 require_relative 'steg_methods.rb'
 require_relative '../classes/not_hex_error.rb'
 require_relative '../classes/not_rgb_error.rb'
+require_relative '../classes/not_binary_error.rb'
 
 # Takes an array with values [r, g, b] and converts to hexidecimal
 def rgb2hex(rgb)
@@ -35,41 +36,7 @@ def bin2str(binary)
     return str
 end
 
-def conversion_feature
-    system "clear"
-    prompt = TTY::Prompt.new
-    case prompt.select("What converstion would you like to do?", cycle: true) do |menu|
-        # For ordered choices set enum to any delimiter String. 
-        # In that way, you can use arrows keys and numbers (0-9) to select the item.
-        menu.enum "."
-        
-        menu.choice "String to binary", 1
-        menu.choice "Binary to string", 2
-        menu.choice "Hexadecimal to RGB", 3
-        menu.choice "RGB to hexadecimal", 4
-        menu.choice "Return to main menu", 5
-        end
-    when 1
-        system "clear"
-        convert_string_to_binary
-    when 2
-        system "clear"
-        convert_binary_to_string
-    when 3
-        system "clear"
-        convert_hex_to_rgb
-    when 4
-        system "clear"
-        convert_rgb_to_hex        
-    when 5
-        system "clear"
-        return_to_menu
-    end
-end
 
-def convert_again?
-
-end
 
 def convert_hex_to_rgb
     system "clear"
@@ -148,14 +115,11 @@ def convert_rgb_to_hex
             rgb << green 
             rgb << blue 
 
-
             rescue NotRgbError => e
                 puts error_style(e.message)
             retry
             
-
         end
-        p rgb
         puts "\nConverting Red: #{rgb[0].to_s}, Green: #{rgb[1].to_s}, Blue: #{rgb[2].to_s}, to hexadecimal\n"
         
         hex = rgb2hex(rgb)
@@ -175,12 +139,84 @@ end
 def convert_binary_to_string
     system "clear"
     puts "#{header_style("Binary  to  String")}"
+
+    loop do
+        begin
+            puts "\nEnter the binary to convert it to a string: "
+            
+            binary = gets.chomp 
+
+            # remove any spaces from the string 
+            binary = binary.delete(' ')
+
+            raise NotBinaryError unless binary.match(/^[0-1]{1,}$/)
+            rescue NotBinaryError => e
+                puts error_style(e.message)
+            retry
+
+        end
+        puts "\nConverting binary to string\n"
+        
+        string = bin2str(binary)
+        
+        sleep(1)
+        
+        puts string
+        
+        prompt = TTY::Prompt.new
+        if prompt.yes?("\nWould you like to do another binary to string conversion?") == true 
+        else
+            return_to_menu
+        end
+    end
 end
 
 def convert_string_to_binary
     system "clear"
     puts "#{header_style("String  to  Binary")}"
+
+    loop do
+        begin
+            puts "\nEnter the string to convert it to binary: "
+            
+            string = gets.chomp 
+
+            # remove any spaces from the string 
+
+            raise StringTooBigError unless string.size > 512
+            rescue StringTooBigError => e
+                puts error_style(e.message)
+            retry
+
+        end
+        puts "\nConverting binary to string\n"
+        
+        string = bin2str(binary)
+        
+        sleep(1)
+        
+        puts string
+        
+        prompt = TTY::Prompt.new
+        if prompt.yes?("\nWould you like to do another binary to string conversion?") == true 
+        else
+            return_to_menu
+        end
+    end
 end
 
 # convert_hex_to_rgb
 # convert_rgb_to_hex 
+# convert_binary_to_string
+# convert_string_to_binary
+
+string = "01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100 01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
+01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
+01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
+01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
+01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
+01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
+01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100
+01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100"
+
+p string.size
