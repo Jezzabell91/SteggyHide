@@ -1,5 +1,6 @@
 require 'chunky_png'
 require 'open3'
+require 'tty-prompt'
 require_relative '../classes/not_png_error.rb'
 require_relative '../classes/file_missing_error.rb'
 require_relative '../classes/message_too_big_error.rb'

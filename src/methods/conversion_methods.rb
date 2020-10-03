@@ -1,5 +1,6 @@
 require_relative 'font_methods.rb'
 require_relative 'steg_methods.rb'
+require_relative '../classes/not_hex_error.rb'
 
 # Takes an array with values [r, g, b] and converts to hexidecimal
 def rgb2hex(rgb)
@@ -65,10 +66,47 @@ def conversion_feature
     end
 end
 
+def convert_again?
+
+end
+
 def convert_hex_to_rgb
     system "clear"
     puts "#{header_style("HEX  to  RGB")}"
+
+
+    loop do
+        begin
+            puts "\nTo convert to RGB enter a hexadecimal color value: "
+            hex = gets.chomp
+            hex = hex.delete_prefix("#")
+            hex = hex.delete_prefix("0x")
+
+            raise NotHexError unless hex.match(/[[:xdigit:]]{3,6}/)
+            rescue NotHexError => e
+                puts error_style(e.message)
+            retry
+        end
+        
+        puts "\nConverting: ##{hex.upcase} to RGB\n"
+        
+        rgb = hex2rgb(hex)
+        
+        sleep(1)
+        
+        p rgb
+        puts "#{red_style("Red:")} #{rgb[0]}, #{green_style("Green:")} #{rgb[1]}, #{blue_style("Blue:")} #{rgb[2]}"
+        
+        prompt = TTY::Prompt.new
+        if prompt.yes?("\n Would you like to do another hex to rgb conversion?") == true 
+        else
+            return_to_menu
+        end
+    end
 end
+
+
+
 
 def convert_rgb_to_hex
     system "clear"
@@ -84,3 +122,5 @@ def convert_string_to_binary
     system "clear"
     puts "#{header_style("String  to  Binary")}"
 end
+
+# convert_hex_to_rgb
