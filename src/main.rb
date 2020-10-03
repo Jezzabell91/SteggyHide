@@ -82,10 +82,7 @@ def conversion_feature
     puts header_style("CONVERSION TOOLS")
     prompt = TTY::Prompt.new
     case prompt.select("What conversion would you like to do?", cycle: true) do |menu|
-        # For ordered choices set enum to any delimiter String. 
-        # In that way, you can use arrows keys and numbers (0-9) to select the item.
         menu.enum "."
-        
         menu.choice "String to binary", 1
         menu.choice "Binary to string", 2
         menu.choice "Hexadecimal to RGB", 3

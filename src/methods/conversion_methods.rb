@@ -59,6 +59,7 @@ def argv_convert_rgb_to_hex
     rgb << ARGV[2].to_i
     rgb << ARGV[3].to_i
 
+    raise ArgumentMissing if ARGV[3].nil?
     raise NotRgbError unless check_if_valid_rgb(rgb[0])
     raise NotRgbError unless check_if_valid_rgb(rgb[1])
     raise NotRgbError unless check_if_valid_rgb(rgb[2])

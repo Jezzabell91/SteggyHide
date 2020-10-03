@@ -16,6 +16,7 @@ A user will start the application in the terminal and they can pass in options a
 
 ### Overall Scope
 The scope of SteggyHide is limited and this is due to time constraints and current knowledge constraints. It can only handle PNG image files and secret messages can only be found if they were previously encoded by SteggyHide. The encoding method is very inelegant and unrefined. In future versions I would like to implement different methods of encoding, ability to handle most image types, ability to decode from externally encoded images. 
+
 ---
 
 ## Features
@@ -27,7 +28,9 @@ This feature allows the user to hide a message within an image and then save a n
 ### Feature 2: **Find message in an image**
 This feature allows the user to find a message within an image and then gives the user the option to save the message in a text file. If no message is found the user is informed. In the current version SteggyHide is only able to find messages that have been hidden using SteggyHide. If there is a hidden message that was encoded by another method, they will not be found by SteggyHide. 
 
-### Feature 3: Learn about steganography
+
+### Feature 3: **Conversion Tools**
+This feature allows the user to utilise some of the conversion functions that SteggyHide uses in the other features. This includes converting hexadecimal colors to RGB colors and vice versa, converting binary values to strings and string messages to binary values. Users can use command line arguments to quickly convert hex to rgb (-hex 'hexvalue') and rgb to hex (-rgb 'red' 'green' 'blue'). 
 
 ---
 
@@ -49,6 +52,23 @@ The user is given the option to list all of the png files in the current directo
 If a secret message is found it is printed to the screen and the user is given the option to save the message to a text file, if they select no they are returned to the main menu. If they do want to save they input a filepath for the text file and the message is written to the file. A success message with the filepath is printed to the screen and the user is returned to the main menu. If no message is found the user is informed and the user is then returned to the main menu.
 
 
-### Feature 3: 
+### Feature 3: **Conversion Tools**
 
+The conversion tools feature allows the user to select from four different tools for conversion. After every conversion the user is asked if they would like to do another conversion, if not they are returned to the main menu.
+
+
+If the user selects "String to Binary" they will be prompted to enter a string message. The message is converted to binary and printed out on the screen. The binary is in a readable format as a space is inserted between every 8 bits. An error is raised if the message is too long and the user will need to type in a smaller string. 
+
+
+If the user selects "Binary to String" they will be prompted to enter a binary value. The binary is converted to ASCII text and the text is printed on the screen. An error is raised if the users input is not in binary format and they will be reminded to input only '1's and '0's. 
+
+
+If the user selects "Hexadecimal to RGB" they will be prompted to enter a hexadecimal value. The function is able to handle shorthand hex values like #DEA as well as full values. Prefixes of # and 0x are acceptable. However if accessed via command line the '#' character is unable to be passed as an argument. The value is converted to RGB and is printed on to the screen. If the hex value is not a legitimate value an error is raised and the user is prompted to enter a valid hex value. 
+
+
+If the user selects "RGB to Hexadecimal" they are prompted to enter values for red, green and blue. The function converts this to a hexadecimal value which is printed on the screen. If any of the values are outside the range 0 - 255 an error is raised and the user is prompted to input values within that range. 
+
+---
+
+## Help Documentation
 

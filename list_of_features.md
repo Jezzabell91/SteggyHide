@@ -16,3 +16,4 @@ This feature allows the user to find a message within an image and then gives th
 
 
 ### Feature 3: Conversion Tools
+This feature allows the user to utilise some of the conversion functions that SteggyHide uses in the other features. This includes converting hexadecimal colors to RGB colors and vice versa, converting binary values to strings and string messages to binary values. Users can use command line arguments to quickly convert hex to rgb (-hex 'hexvalue') and rgb to hex (-rgb 'red' 'green' 'blue'). 
