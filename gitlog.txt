@@ -1,0 +1,215 @@
+commit fc9adee8289e5344f2b0f3217f284b0b8d92743c
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sun Oct 4 04:31:06 2020 +1000
+
+    Added Control Flow Diagram
+
+commit ffff692f34040e5f5f2b73d3c57c2db7b6470b68
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sun Oct 4 03:45:34 2020 +1000
+
+    Cleaned up code to comply with style guide, added some comments
+
+commit 1bddb87a5d561ac0490bf39dfb227d2193f7b975
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sun Oct 4 03:13:35 2020 +1100
+
+    Completed list of features documentation
+
+commit f6a2cd74a359e15414227ad6c80b3d23c4c8b2b7
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sun Oct 4 01:38:25 2020 +1000
+
+    Finished implementing command line arguments for converting hex and rgb, and for reaching help info
+
+commit a5348d83e23decd81a423e1842c9838c006700ec
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sun Oct 4 00:42:09 2020 +1000
+
+    Started adding command line options
+
+commit 2a10cee63693f4df5af5e5bd5fdad5e3852ebd29
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sat Oct 3 23:32:31 2020 +1000
+
+    Added help.rb which has instructions on how to use each feature
+
+commit e27b5df89581ffdb46bcb75064c65cfdd5259898
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sat Oct 3 21:08:44 2020 +1000
+
+    Fixed some documentation
+
+commit 140b71ced1979cf477b3616bf79d1794818a1dbe
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sat Oct 3 20:47:23 2020 +1000
+
+    Completed convert_string_to_binary method
+
+commit 27e5224db1e4320f69e6f4efe4696b883f120813
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sat Oct 3 20:22:31 2020 +1000
+
+    Completed convert_binary_to_string method
+
+commit 03f900d7462583ac0719b339115e19b93b28ea40
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sat Oct 3 19:29:47 2020 +1000
+
+    Completed convert_rgb_to_hex method
+
+commit 70648076a04d740e08515181665fe1c6c3b0e246
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sat Oct 3 16:57:20 2020 +1000
+
+    Completed convert_hex_to_rgb method
+
+commit df30613d1b1b2c31ca8cf6c6e8cbec9c58c875ac
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sat Oct 3 14:09:15 2020 +1000
+
+    Started creating feature for users to use conversion methods
+
+commit 9a107b9988e9eb67ebc5e3303f9ddbeb26af272d
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sat Oct 3 12:37:36 2020 +1000
+
+    moved png files to png folder
+
+commit dc84d1ecfdc02e004593832e7f7ec27cded43dd6
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sat Oct 3 11:43:37 2020 +1000
+
+    Completed tests for find feature
+
+commit 209bd3d06940bf0ca00650600c9455ff9316f77a
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Sat Oct 3 11:04:14 2020 +1000
+
+    Fixed a bug where large files would find the delimiter and no secret message was hidden. Changed delimiter from 16bit to 32bit
+
+commit 8c2b151f4a46417ccbc5132440d6f60dd770c017
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Fri Oct 2 17:09:15 2020 +1000
+
+    Created tests for find feature
+
+commit 39d90da4dcf301fb914fc1f66167b766ecd7ccf8
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Fri Oct 2 14:57:29 2020 +1000
+
+    Created tests for hide feature
+
+commit abd595788398e69cd29d0c401d7c5a53ae1d68ab
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Fri Oct 2 13:43:33 2020 +1000
+
+    Continued work on documentation
+
+commit 0b5cbb71fec0daee06cc65ba34b87b4e66f0bf3d
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Fri Oct 2 11:49:27 2020 +1000
+
+    Added details to documentation
+
+commit 0cadae7c7fee6503b462917d5787b194193f1e83
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Thu Oct 1 23:54:34 2020 +1000
+
+    Added message_too_big_error.rb, fixed up error handling, added font styling to errors and successful operations
+
+commit 64bc9c779118b9009e199ce79287382fc13e1d99
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Thu Oct 1 21:03:39 2020 +1000
+
+    Added font_methods.rb, Added file_missing_error.rb, testing out open3 in list_png method, refactored find method
+
+commit 25d412c2e467721c6b8fcb633bb5485e21cfcfa0
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Thu Oct 1 17:57:00 2020 +1000
+
+    Added custom error for filetype not being png
+
+commit 0364d67c8867dc530c09bd7e534eba0365f3da20
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Thu Oct 1 15:24:39 2020 +1000
+
+    Added methods for feature 1, applying DRY principles
+
+commit d8bc0a1a0ab6b8fde4dcf343a381a14692eae0dd
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Thu Oct 1 03:39:11 2020 +1000
+
+    Successful when every pixel is eligible to be encoded, otherwise bugged
+
+commit c6ccf72c0474f4799d42dea0a91744fcab8dc1c3
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Thu Oct 1 00:42:32 2020 +1000
+
+    Still working on find, more testing on encode
+
+commit 3f7e4b815d0514d6c6e50823ae8f870f91e6bb30
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Thu Oct 1 00:00:09 2020 +1000
+
+    Added find method, not currently working, fixed bugs in encode and decode methods
+
+commit 5a049ac488f6cb9fc0e7cbb8372c4ea93046c35a
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Wed Sep 30 09:23:24 2020 +1000
+
+    Added tests and commenting to hide.rb
+
+commit 58e59561f6cfa9f242209d8de1e3e17f914c5ae7
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Tue Sep 29 21:08:23 2020 +1000
+
+    Created method to make image from array of pixel data
+
+commit f52d78a2027924a378ebfeb44d5d87c095042655
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Tue Sep 29 17:55:55 2020 +1000
+
+    Added convert_pixels method
+
+commit bebcab90417197bcde1f9bb5f7b3738cf7ab4cd1
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Tue Sep 29 09:46:38 2020 +1000
+
+    Added hide.rb to perform steganography functions
+
+commit 2b23883e8d751aa507ee3c460c6e3b6efbba5041
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Tue Sep 29 00:46:34 2020 +1000
+
+    Created main_menu method with prompt for user to select option and case statement to handle selection
+
+commit 69359dfac927fff65482cd2403642ade2e038924
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Tue Sep 29 00:15:15 2020 +1000
+
+    Put all start page stuff in class file start_page.rb
+
+commit 4f0f06f4f0cea654f7a108a85a41191a3f466ef2
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Mon Sep 28 23:43:43 2020 +1000
+
+    Added main.rb, classes folder, start_page.rb
+
+commit 9d7610edfcfbf2add7759d0e3440756bd3f3828f
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Mon Sep 28 09:27:11 2020 +1000
+
+    Added more documentation
+
+commit 8214704866c94fce41f98cfd5e43710053ab8d56
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Thu Sep 24 13:10:21 2020 +1000
+
+    begin creating development plan
+
+commit 839576a8b5811af255c1aedc4b24713c79f7c335
+Author: Jeremy Bell <jeremy.bell91@gmail.com>
+Date:   Thu Sep 24 00:18:25 2020 +1000
+
+    initial commit

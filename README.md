@@ -82,9 +82,11 @@ If the user selects "RGB to Hexadecimal" they are prompted to enter values for r
 
 [Link to trello board](https://trello.com/b/kLixh3kr/steggyhide)
 
-[Trello Log](docs/trello_log.pdf)
+[Trello Log PDF](docs/trello_log.pdf)
 
---
+[Trello Log imgur](https://imgur.com/a/2v13QdL)
+
+--- 
 
 ## Help Documentation
 
