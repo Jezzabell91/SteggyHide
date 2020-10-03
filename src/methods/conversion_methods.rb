@@ -42,9 +42,10 @@ end
 def argv_convert_hex_to_rgb
     hex = ARGV[1]
     raise ArgumentMissing if ARGV[1].nil?
+
     hex = hex.delete_prefix("0x")
 
-    raise NotHexError unless check_if_hex(hex)
+    raise NotHexError unless hex?(hex)
 
     puts "\nConverting: ##{hex.upcase} to RGB\n"
 
@@ -59,19 +60,20 @@ def argv_convert_rgb_to_hex
     rgb << ARGV[2].to_i
     rgb << ARGV[3].to_i
 
+    # Only needs to check if ARGV[3] is missing, because if it is the input is invalid 
     raise ArgumentMissing if ARGV[3].nil?
-    raise NotRgbError unless check_if_valid_rgb(rgb[0])
-    raise NotRgbError unless check_if_valid_rgb(rgb[1])
-    raise NotRgbError unless check_if_valid_rgb(rgb[2])
+    raise NotRgbError unless valid_rgb?(rgb[0])
+    raise NotRgbError unless valid_rgb?(rgb[1])
+    raise NotRgbError unless valid_rgb?(rgb[2])
 
-    puts "\nConverting Red: #{rgb[0].to_s}, Green: #{rgb[1].to_s}, Blue: #{rgb[2].to_s}, to hexadecimal\n"
+    puts "\nConverting Red: #{rgb[0]}, Green: #{rgb[1]}, Blue: #{rgb[2]}, to hexadecimal\n"
     
     hex = rgb2hex(rgb)
     sleep(1)
     puts "##{hex.upcase}"
 end
 
-def check_if_hex(hex)
+def hex?(hex)
     # Hex for RGB needs to be between 3 and 6 digits
     if hex.size < 3 || hex.size > 6
         return false
@@ -97,7 +99,7 @@ def convert_hex_to_rgb
             hex = hex.delete_prefix("#")
             hex = hex.delete_prefix("0x")
 
-            raise NotHexError unless check_if_hex(hex)
+            raise NotHexError unless hex?(hex)
             rescue NotHexError => e
                 puts error_style(e.message)
             retry
@@ -120,10 +122,12 @@ def convert_hex_to_rgb
     end
 end
 
-def check_if_integer(value)
+# Need to do this because strings evaluate to 0 when .to_i is called
+def convert_to_integer(value)
     if value == "0"
         value = 0
     elsif value.to_i == 0
+        # Set to -1 as we are dealing with range 0-255 so -1 will raise error
         value = -1
     else
         value = value.to_i
@@ -131,7 +135,7 @@ def check_if_integer(value)
     return value
 end
 
-def check_if_valid_rgb(value)
+def valid_rgb?(value)
     # RGB values must be in the range 0-255
     unless value >= 0 && value <= 255
         return false
@@ -151,18 +155,18 @@ def convert_rgb_to_hex
 
             puts "Red:"
             red = gets.chomp
-            red = check_if_integer(red)
-            raise NotRgbError unless check_if_valid_rgb(red)
+            red = convert_to_integer(red)
+            raise NotRgbError unless valid_rgb?(red)
 
             puts "Green:"
             green = gets.chomp
-            green = check_if_integer(green)
-            raise NotRgbError unless check_if_valid_rgb(green)
+            green = convert_to_integer(green)
+            raise NotRgbError unless valid_rgb?(green)
             
             puts "Blue:"
             blue = gets.chomp
-            blue = check_if_integer(blue)
-            raise NotRgbError unless check_if_valid_rgb(blue)
+            blue = convert_to_integer(blue)
+            raise NotRgbError unless valid_rgb?(blue)
             
             rgb << red
             rgb << green 
@@ -173,7 +177,7 @@ def convert_rgb_to_hex
             retry
             
         end
-        puts "\nConverting Red: #{rgb[0].to_s}, Green: #{rgb[1].to_s}, Blue: #{rgb[2].to_s}, to hexadecimal\n"
+        puts "\nConverting Red: #{rgb[0]}, Green: #{rgb[1]}, Blue: #{rgb[2]}, to hexadecimal\n"
         
         hex = rgb2hex(rgb)
         
@@ -202,6 +206,7 @@ def convert_binary_to_string
             # remove any spaces from the string 
             binary = binary.delete(' ')
 
+            # only 1 and 0 characters allowed
             raise NotBinaryError unless binary.match(/^[0-1]{1,}$/)
             rescue NotBinaryError => e
                 puts error_style(e.message)
@@ -234,6 +239,7 @@ def convert_string_to_binary
             
             string = gets.chomp 
 
+            # 512 chosen because printing 4096 bits seems like enough
             raise StringTooBig unless string.size < 512
             rescue StringTooBig => e
                 puts error_style(e.message)
@@ -258,7 +264,3 @@ def convert_string_to_binary
     end
 end
 
-# convert_hex_to_rgb
-# convert_rgb_to_hex 
-# convert_binary_to_string
-# convert_string_to_binary

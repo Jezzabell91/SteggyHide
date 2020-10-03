@@ -57,7 +57,7 @@ def find_test(path)
             message = bin2str(binary_message)
             puts "Message reads: #{message}"
             File.write("#{path[0..-5]}.txt", message)
-            return 
+            break
         end
     end
 
