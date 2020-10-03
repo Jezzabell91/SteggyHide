@@ -60,5 +60,5 @@ def find_feature
 
 end
 
-# steggy_start.print_start_page
-# main_menu
+steggy_start.print_start_page
+main_menu

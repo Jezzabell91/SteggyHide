@@ -5,6 +5,8 @@ require_relative '../classes/file_missing_error.rb'
 require_relative '../classes/message_too_big_error.rb'
 require_relative 'font_methods.rb'
 
+require 'pry'
+
 # Takes an array with values [r, g, b] and converts to hexidecimal
 def rgb2hex(rgb)
     hex = "#{rgb[0].to_s(16)}#{rgb[1].to_s(16)}#{rgb[2].to_s(16)}"
@@ -78,7 +80,7 @@ end
 
 def hide(message, path)
 
-    delimiter = '1111111111111110'
+    delimiter = "11111001010101010010101011110101"
     binary_message = str2bin(message) + delimiter
 
     img = ChunkyPNG::Image.from_file(path)
@@ -190,10 +192,10 @@ def return_to_menu
     main_menu
 end
 
-def write_to_file(binary_message, path)
+def write_to_file(message, path)
     prompt = TTY::Prompt.new
     if prompt.yes?("Do you want to save the message to a .txt file?") == true
-        File.write("#{path[0..-5]}.txt", bin2str(binary_message))
+        File.write("#{path[0..-5]}.txt", message)
         puts success_style("Message was saved to #{path[0..-5]}.txt")
         return_to_menu
     else
@@ -208,7 +210,7 @@ def find(path)
         pixel_data = get_pixel_data(img)
 
         binary = ""
-        delimiter = "1111111111111110"
+        delimiter = "11111001010101010010101011110101"
 
         pixel_data.each do |pixel|
             
@@ -220,12 +222,14 @@ def find(path)
             else
                 next
             end
-            if binary[-16..-1] == delimiter
+            if binary[-32..-1] == delimiter
+                # binding.pry
                 puts success_style("Message was successfully found")
-                binary_message = binary[0..-17]
+                binary_message = binary[0..-33]
                 message = bin2str(binary_message)
                 puts "Message reads: "
                 puts message
+                # binding.pry
                 write_to_file(message, path)
             end
         end

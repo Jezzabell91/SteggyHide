@@ -61,7 +61,7 @@ def find_test(path)
         end
     end
 
-    return "Message was not found or was unable to be recovered"
+    puts "Message was not found or was unable to be recovered"
 
 end
 
@@ -82,26 +82,26 @@ end
 system "clear"
 puts "Testing find Feature"
 
-# Message too big to find in image
+# Message not found
 # Expected outcome: Fail 
-# => "The size of the message exceeds the number of pixels"
-puts "\nMessage too big to find in image"
-find_feature_test("test.png")
+# => "No message was found"
+puts "No message test"
+find_feature_test("no_message_test.png")
 
 # Selecting a non .png file
 # Expected outcome: Fail 
 # => "File is not .png filetype"
-puts "\nSelecting a non .png file"
-find_feature_test("test.txt")
+# puts "\nSelecting a non .png file"
+# find_feature_test("test.txt")
 
 # Selecting a .png file that doesn't exist
 # Expected outcome: Fail 
 # => "File not found, sorry"
-puts "\nSelecting a .png file that doesn't exist"
-find_feature_test("missing.png")
+# puts "\nSelecting a .png file that doesn't exist"
+# find_feature_test("missing.png")
 
 # Message is correct size and selecting .png file that exists
 # Expected outcome: Success
 # => "Created ../test_test.png"
-puts "\nMessage is correct size and selecting .png file that exists"
-find_feature_test("test", "../test.png")
+# puts "\nMessage is correct size and selecting .png file that exists"
+# find_feature_test("test", "../test.png")
