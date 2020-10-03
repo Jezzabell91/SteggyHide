@@ -1,5 +1,59 @@
 # SteggyHide
 
+
+
+## Help Documentation
+
+### **Installing** 
+SteggyHide is a Command Line Application
+
+Clone the source files from [github.com/Jezzabell91/SteggyHide](https://github.com/Jezzabell91/SteggyHide)
+
+In your target directory run the command from terminal
+
+```terminal
+git clone https://github.com/Jezzabell91/SteggyHide
+```
+
+From here run the command 
+
+```terminal
+cd src/
+```
+
+And run the steggyhide script which will install the required gems
+
+```terminal
+./steggyhide.sh
+```
+
+To run the program use
+
+```terminal
+ruby steggyhide.rb
+```
+### **Gems**
+SteggyHide uses four gems
+1. TTY-Prompt
+2. TTY-Font
+3. Pastel
+4. Chunky_PNG 
+
+If you don't wish to run the steggyhide shell script you can install each of theses gems. 
+
+```terminal
+gem install tty-prompt
+gem install tty-font
+gem install pastel
+gem install chunky_png
+```
+### **System/Hardware Requirements**
+There are no specific hardware requirements other than a device that can run terminal applications.
+
+For software ruby 2.0 or greater is required
+
+--- 
+
 ## Purpose and Scope
 
 ### What does it do?
@@ -86,7 +140,4 @@ If the user selects "RGB to Hexadecimal" they are prompted to enter values for r
 
 [Trello Log imgur](https://imgur.com/a/2v13QdL)
 
---- 
-
-## Help Documentation
 
