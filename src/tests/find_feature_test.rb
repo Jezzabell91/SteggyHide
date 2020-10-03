@@ -1,6 +1,5 @@
 
 require_relative '../methods/steg_methods.rb'
-require_relative '../methods/font_methods.rb'
 
 # Testing methodology. I am testing the primary methods for the find feature.
 # To do this I have brought in a modified  method, find_test, which removes

@@ -4,36 +4,11 @@ require_relative '../classes/not_png_error.rb'
 require_relative '../classes/file_missing_error.rb'
 require_relative '../classes/message_too_big_error.rb'
 require_relative 'font_methods.rb'
+require_relative 'conversion_methods.rb'
 
 require 'pry'
 
-# Takes an array with values [r, g, b] and converts to hexidecimal
-def rgb2hex(rgb)
-    hex = "#{rgb[0].to_s(16)}#{rgb[1].to_s(16)}#{rgb[2].to_s(16)}"
-    return hex
-end
 
-# Takes a hexidecimal value and converts it to rgb array [r, g, b]
-def hex2rgb (hex)
-    hex = hex.delete_prefix("#")
-    r = hex[0..1].to_i(16)
-    g = hex[2..3].to_i(16)
-    b = hex[4..5].to_i(16)
-    rgb = [r, g, b]
-    return rgb
-end
-
-# Takes a string and turns it into a binary string 
-def str2bin(message)
-    binary = message.unpack("B*")[0]
-    return binary
-end
-
-# Takes a binary string and returns a string of ASCII characters
-def bin2str(binary)
-    str = [binary].pack("B*")
-    return str
-end
 
 def encode(hex, digit)
         hex[-1] = digit
@@ -89,7 +64,7 @@ def hide(message, path)
         raise MessageTooBig unless binary_message.length < old_data.length
         rescue MessageTooBig => e
             puts error_style(e.message)
-            return_to_menu
+            return_to_menu?
     end 
 
     new_data = []
@@ -111,7 +86,7 @@ def hide(message, path)
 
     new_img = create_image_with_pixel(new_data, img)
     save_image(new_img)
-    return_to_menu
+    return_to_menu?
 end
 
 def save_image(image_data)
@@ -176,9 +151,18 @@ def exit_to_menu?(str)
     end
 end
 
+def return_to_menu?
+    prompt = TTY::Prompt.new
+    if prompt.yes?("Do you want to return to the main menu?") == true
+        return_to_menu
+    else
+        exit
+    end
+end
+
 def return_to_menu
     puts "Returning to menu"
-    sleep(4)
+    sleep(3)
     main_menu
 end
 
@@ -187,10 +171,10 @@ def write_to_file(message, path)
     if prompt.yes?("Do you want to save the message to a .txt file?") == true
         File.write("#{path[0..-5]}.txt", message)
         puts success_style("Message was saved to #{path[0..-5]}.txt")
-        return_to_menu
+        return_to_menu?
     else
         puts "Message was not saved"
-        return_to_menu
+        return_to_menu?
     end
 end
 
@@ -223,6 +207,6 @@ def find(path)
         end
 
         puts "Message was not found or was unable to be recovered"
-        return_to_menu
+        return_to_menu?
 
 end

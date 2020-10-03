@@ -1,5 +1,5 @@
-require_relative "../main.rb"
 require_relative "../methods/steg_methods.rb"
+
 
 # Testing methodology. I am testing the primary methods for the hide feature.
 # To do this I have brought in a modified hide method, hide_test, which removes
@@ -27,7 +27,7 @@ require_relative "../methods/steg_methods.rb"
 
 
 def hide_test(message, path)
-    delimiter = '1111111111111110'
+    delimiter = "11111001010101010010101011110101"
     binary_message = str2bin(message) + delimiter
     begin
         raise NotPngError unless path[-4..-1] == ".png"
@@ -87,13 +87,13 @@ puts "Testing Hide Feature"
 # Expected outcome: Fail 
 # => "The size of the message exceeds the number of pixels"
 puts "\nMessage too big to hide in image"
-hide_feature_test("thismessageiswaytoobigforsuchatinyimage", "../test.png")
+hide_feature_test("thismessageiswaytoobigforsuchatinyimage", "test.png")
 
 # Selecting a non .png file
 # Expected outcome: Fail 
 # => "File is not .png filetype"
 puts "\nSelecting a non .png file"
-hide_feature_test("test", "../test.txt")
+hide_feature_test("test", "test.txt")
 
 # Selecting a .png file that doesn't exist
 # Expected outcome: Fail 
@@ -105,5 +105,5 @@ hide_feature_test("test", "missing.png")
 # Expected outcome: Success
 # => "Created ../test_test.png"
 puts "\nMessage is correct size and selecting .png file that exists"
-hide_feature_test("test", "../test.png")
+hide_feature_test("test", "test.png")
 

@@ -19,7 +19,7 @@ def main_menu
         
         menu.choice "Hide a message in an image", 1
         menu.choice "Find a message in an image", 2
-        menu.choice "Learn about steganography", 3
+        menu.choice "Conversion Utility Tools", 3
         menu.choice "Open help documentations", 4
         menu.choice "Exit!", 5
         end
@@ -31,7 +31,7 @@ def main_menu
         find_feature
     when 3
         system "clear"
-        puts "What is the directory filepath?" 
+        conversion_feature
     when 4
         system "clear"
         puts "Opening documentations"        
@@ -44,7 +44,7 @@ end
 
 def hide_feature
     system "clear"
-    header_style("HIDE")
+    puts header_style("HIDE")
     list_prompt
     path = get_filepath
     message = get_message
@@ -53,10 +53,15 @@ end
 
 def find_feature
     system "clear"
-    header_style("FIND")
+    puts header_style("FIND")
     list_prompt
     path = get_filepath
     find(path)
+end
+
+def conversion_tools
+    system "clear"
+    header_style("CONVERSION TOOLS")
 
 end
 
