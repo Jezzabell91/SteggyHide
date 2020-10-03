@@ -1,6 +1,7 @@
 require_relative 'font_methods.rb'
 require_relative 'steg_methods.rb'
 require_relative '../classes/not_hex_error.rb'
+require_relative '../classes/not_rgb_error.rb'
 
 # Takes an array with values [r, g, b] and converts to hexidecimal
 def rgb2hex(rgb)
@@ -105,12 +106,70 @@ def convert_hex_to_rgb
     end
 end
 
+def check_if_integer(value)
+    if value == "0"
+        value = 0
+    elsif value.to_i == 0
+        value = -1
+    else
+        value = value.to_i
+    end
+    return value
+end
 
 
 
 def convert_rgb_to_hex
     system "clear"
     puts "#{header_style("RGB  to  HEX")}"
+
+    loop do
+        begin
+            puts "\nTo convert to hexadecimal enter a color value in RGB format: "
+
+            rgb = []
+
+            puts "Red:"
+            red = gets.chomp
+            red = check_if_integer(red)
+            raise NotRgbError unless red >= 0 && red <= 255
+
+            puts "Green:"
+            green = gets.chomp
+            green = check_if_integer(green)
+            raise NotRgbError unless green >= 0 && green <= 255
+            
+            puts "Blue:"
+            blue = gets.chomp
+            blue = check_if_integer(blue)
+            raise NotRgbError unless blue >= 0 && blue <= 255
+            
+            rgb << red
+            rgb << green 
+            rgb << blue 
+
+
+            rescue NotRgbError => e
+                puts error_style(e.message)
+            retry
+            
+
+        end
+        p rgb
+        puts "\nConverting Red: #{rgb[0].to_s}, Green: #{rgb[1].to_s}, Blue: #{rgb[2].to_s}, to hexadecimal\n"
+        
+        hex = rgb2hex(rgb)
+        
+        sleep(1)
+        
+        puts "##{hex.upcase}"
+        
+        prompt = TTY::Prompt.new
+        if prompt.yes?("\nWould you like to do another rgb to hex conversion?") == true 
+        else
+            return_to_menu
+        end
+    end
 end
 
 def convert_binary_to_string
@@ -124,3 +183,4 @@ def convert_string_to_binary
 end
 
 # convert_hex_to_rgb
+# convert_rgb_to_hex 
