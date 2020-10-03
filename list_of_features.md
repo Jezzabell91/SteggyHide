@@ -15,4 +15,4 @@ This feature allows the user to hide a message within an image and then save a n
 This feature allows the user to find a message within an image and then gives the user the option to save the message in a text file. If no message is found the user is informed. In the current version SteggyHide is only able to find messages that have been hidden using SteggyHide. If there is a hidden message that was encoded by another method, they will not be found by SteggyHide. 
 
 
-### Feature 3: Learn about steganography
+### Feature 3: Conversion Tools
