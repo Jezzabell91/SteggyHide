@@ -6,7 +6,7 @@ require_relative 'methods/font_methods.rb'
 
 steggy_start = Start_Page.new(:title => "SteggyHide",
     :creator => "Jeremy Bell",
-    :source => "github.com/steggyhide",
+    :source => "github.com/Jezzabell91/SteggyHide",
     :version => "0.10"
 )
 

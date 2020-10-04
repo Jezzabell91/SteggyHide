@@ -52,6 +52,101 @@ There are no specific hardware requirements other than a device that can run ter
 
 For software ruby 2.0 or greater is required
 
+### **How to use:**
+
+**Command Line Arguments**
+
+
+COMMAND: 
+
+-h
+
+ --help
+
+Takes you to help documentation
+
+
+COMMAND:
+
+ -hex 'hexvalue'
+
+Use the -hex argument with a hex value with 3 to 6 digits to convert to RGB values
+Please note command line arguments cannot begin with #
+Examples:
+
+```terminal
+Good:
+hex a12fed
+hex 0x23EEFD
+
+Bad:
+hex #DE3    #will result in an error
+```
+
+
+COMMAND:    
+-rgb 'red' 'green' 'blue'
+
+
+Use the -rgb argument with RGB values. Each value needs to be an integer between 0 and 255.
+Example:
+```terminal
+rgb 231 34 67
+```
+
+INSTRUCTIONS ON HOW TO USE EACH FEATURE: 
+
+HIDE A MESSAGE
+
+1. If you're not sure what images are in your directory use the prompt to list images
+
+2. Select a png image by entering the filepath. If the filepath does not end in .png
+  or if the file does not exist in the directory an error will occur and you will
+  be given the option to retry or exit back to the main menu.
+
+3. Enter a message that you want to hide. If the message is too large
+  to be hidden in the chosen image an error will occur and you will be taken back to the main menu.
+
+4. SteggyHide now does it's thing and encodes the message in the image
+
+5. Finally, enter the filepath for the new image which has the secret message hidden inside.
+If the filepath does not end in .png an error will occur and you will be given the option to retry.
+
+FIND A MESSAGE
+
+1. If you're not sure what images are in your directory use the prompt to list images
+
+2. Select a png image by entering the filepath. If the filepath does not end in .png
+  or if the file does not exist in the directory an error will occur and you will
+  be given the option to retry or exit back to the main menu.
+
+3. SteggyHide now does it's thing and if there is a hidden message it will decode the message
+
+4. If you want to save the message in a text file input the filepath where you want to save
+
+CONVERSION TOOLS
+
+Select which conversion tool you would like to use from the list
+
+1. Convert from string to binary - Enter a string, just make sure it isn't too long.
+
+2. Convert from binary to string - Enter the binary and make sure there's only '1's and '0's.
+
+3. Convert from hexadecimal to RGB - Enter a hexadecimal value with at least 3 digits.
+Can use common formats including hex numbers prefixed with 0x and # 
+
+4. Convert from RGB to hexadecimal - Enter values for Red, Green and Blue. Numbers must be between 0 and 255.
+
+---
+
+## References
+
+Idea for the app was inspired by Computerphile's video on steganography (Computerphile, 2015). Many of the methods were adapted from DrapsTV's python tutorial for hiding text in images (DrapsTV, 2014)
+
+Computerphile (2015) *Secrets Hidden in Images (Steganography) - Computerphile* Available at: https://youtu.be/TWEXCYQKyDc (Accessed: 25 September 2020).
+
+DrapsTV (2014) *Steganography Tutorial - Hiding Text inside an Image* Available at: https://youtu.be/q3eOOMx5qoo (Accessed: 28 September 2020).
+
 --- 
 
 ## Purpose and Scope
