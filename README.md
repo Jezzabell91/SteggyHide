@@ -236,3 +236,97 @@ If the user selects "RGB to Hexadecimal" they are prompted to enter values for r
 [Trello Log imgur](https://imgur.com/a/2v13QdL)
 
 
+### **General Things to Do**
+
+Create Landing Page - 29/09 (easy, must-have) 
+
+Create Menu - 29/09 (normal, must-have)
+
+Create Exit Option - 30/09 (easy, must-have) 
+
+Create Help Documenation - 03/10 (normal, must-have)
+- [ ] steps to install
+- [ ] bundle gems
+- [ ] delete gemlock file
+- [ ] system/hardware requirements
+- [ ] put in test png files
+
+User Experience Outline - 03/10 (easy, must-have)
+- [ ] experience for hide feature
+- [ ] experience for fide feature
+- [ ] experience for conversion tools feature
+
+Add Command Line Arguments - 03/10 (normal, must-have)
+- [ ] Help - take user to documentation
+- [ ] Hex - convert hex to rgb
+- [ ] RGB - convert rgb to hex
+
+Scripting and Bundler 04/10 (normal, should-have)
+- [ ] Bundle gems
+- [ ] Create script
+
+### Feature 1: **Hide message in an image**
+
+Create Methods for Hiding Messages 30/09 (insane, must-have)
+- [ ] string to binary
+- [ ] binary to string
+- [ ] hex to rgb
+- [ ] rgb to hex
+- [ ] encode
+- [ ] get image data
+- [ ] create image with pixels
+- [ ] hide message
+
+Control flow and Error Handling for Hiding Messages 30/09 (normal, must-have)
+- [ ] get message from user
+- [ ] if message is invalid "Prompt user to enter message to hide or return to options"
+- [ ] get image path from user
+- [ ] if Image is not valid, inform user and return to options
+- [ ] display file path
+- [ ] create file that contains the image with message hidden inside
+
+Testing for Hide Feature 02/10 (hard, could-have)
+- [ ] test when message too big
+- [ ] test when non .png file selected
+- [ ] test when file does not exist
+- [ ] test when everything is correct
+
+
+### Feature 2: **Find message in an image**
+
+Create Methods for Finding Messages 30/09 (insane, must-have)
+- [ ] decode
+- [ ] write to text file
+- [ ] find message
+
+Control flow and Error Handling for Finding Messages 30/09 (normal, must-have)
+- [ ] get filepath from user
+- [ ] if path is not valid, inform user and retry
+- [ ] check for hidden message
+- [ ] print message to screen
+- [ ] ask user if they want to save message in a .txt file
+- [ ] save message to .txt file
+- [ ] if no message found tell user and return to menu
+
+Testing for Hide Feature 02/10 (hard, could-have)
+- [ ] test when message not found
+- [ ] test when non .png file selected
+- [ ] test when file does not exist
+- [ ] test when everything is correct
+
+### Feature 3: **Conversion Tools**
+
+Implement Conversion Utility Feature 03/10 (hard, must-have)
+- [ ] create menu to select which tool
+- [ ] binary to string 
+- [ ] string to binary
+- [ ] hexadecimal to rgb
+- [ ] rgb to hexadecimal 
+
+Control flow and Error Handling for Conversion Tools 03/10 (normal, must-have)
+- [ ] ask user if they want to do another conversion
+- [ ] if input invalid (for each tool) raise error and let user retry
+
+
+
+
